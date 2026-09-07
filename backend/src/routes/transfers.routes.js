@@ -7,9 +7,9 @@ const authMiddleware = require('../middlewares/auth.middleware');
 router.use(authMiddleware);
 
 // POST /api/transfers - Initiate transfer
-router.post('/', transfersController.initiateTransfer);
+router.post('/', transfersController.createTransfer);
 
 // GET /api/transfers/history - Retrieve transaction ledger
-router.get('/history', transfersController.getTransferHistory);
+router.get('/history', transfersController.getHistory);
 
 module.exports = router;
