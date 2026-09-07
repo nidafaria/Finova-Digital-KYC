@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const transfersController = require('../controllers/transfers.controller');
+const authMiddleware = require('../middlewares/auth.middleware');
 
-// POST /api/transfers - Execute wallet/cross-border transfer
-router.post('/', transfersController.createTransfer);
+// Apply auth middleware to protect all transfer operations
+router.use(authMiddleware);
 
-// GET /api/transfers/history - Retrieve user transaction history
-router.get('/history', transfersController.getHistory);
+// POST /api/transfers - Initiate transfer
+router.post('/', transfersController.initiateTransfer);
+
+// GET /api/transfers/history - Retrieve transaction ledger
+router.get('/history', transfersController.getTransferHistory);
 
 module.exports = router;
