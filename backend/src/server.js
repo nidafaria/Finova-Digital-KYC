@@ -5,6 +5,7 @@ require('dotenv').config();
 // Person 2 Routes (KYC & Beneficiaries)
 const kycRoutes = require('./routes/kycRoutes');
 const beneficiaryRoutes = require('./routes/beneficiaryRoutes');
+const authRoutes = require('./routes/auth.routes');
 
 // Person 3 Routes (Wallet, FX & Transfers)
 const walletTransferRoutes = require('./routes/index.wallet-transfer');
@@ -30,6 +31,7 @@ app.get('/health', (req, res) => {
 });
 
 // Mount Person 2 Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/kyc', kycRoutes);
 app.use('/api/beneficiaries', beneficiaryRoutes);
 
