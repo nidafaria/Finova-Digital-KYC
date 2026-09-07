@@ -2,30 +2,54 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+// Person 2 Routes (KYC & Beneficiaries)
 const kycRoutes = require('./routes/kycRoutes');
 const beneficiaryRoutes = require('./routes/beneficiaryRoutes');
+
+// Person 3 Routes (Wallet, FX & Transfers)
+const walletTransferRoutes = require('./routes/index.wallet-transfer');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Global Middleware
+// Global Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve uploaded files statically (for KYC documents)
+// Serve uploaded KYC verification documents statically
 app.use('/uploads', express.static('uploads'));
 
-// API Routes (Fixed Endpoints)
+// Health Check Endpoints
+app.get('/', (req, res) => {
+  res.json({ message: 'Nexora Unified Backend Core (KYC, Beneficiaries, Wallet & Transfers) running successfully!' });
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', service: 'Nexora Unified Core' });
+});
+
+// Mount Person 2 Routes
 app.use('/api/kyc', kycRoutes);
 app.use('/api/beneficiaries', beneficiaryRoutes);
 
-// Health check endpoint
-app.get('/', (req, res) => {
-  res.json({ message: 'Nexora Backend API (Teammate 2 - KYC & Beneficiaries) is running successfully!' });
+// Mount Person 3 Routes (/api/wallet, /api/fx, /api/transfers)
+app.use('/api', walletTransferRoutes);
+
+// 404 Handler
+app.use((req, res) => {
+  res.status(404).json({ error: 'Endpoint not found' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
 });
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Nexora Unified Backend running on port ${PORT}`);
+});
+
+module.exports = app;
