@@ -1,0 +1,14 @@
+{
+  "name": "nexora-wallet-backend",
+  "version": "1.0.0",
+  "description": "Wallet, FX, and Transfers micro-service for Nexora Digital KYC",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
