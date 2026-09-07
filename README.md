@@ -1,1 +1,1 @@
-# Nexora Digital KYC 
+# Nexora - Cross-Border Digital Payments & KYC Platform
