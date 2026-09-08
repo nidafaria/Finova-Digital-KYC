@@ -1,0 +1,1 @@
+{echo   "rewrites": [echo     {echo       "source": "/(.*)",echo       "destination": "/index.html"echo     }echo   ]echo }
